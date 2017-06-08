@@ -11,7 +11,7 @@
 package require Tcl 8.6
 # Keep this in sync with pkgIndex.tcl and with the install directories in
 # Makefiles
-package provide http 2.8.6
+package provide http 2.9.0
 
 namespace eval http {
     # Allow resourcing to not clobber existing data
@@ -325,6 +325,7 @@ proc http::geturl {url args} {
 	-type		application/x-www-form-urlencoded
 	-queryprogress	{}
 	-protocol	1.1
+        -followredirect 0
 	binary		0
 	state		connecting
 	meta		{}
@@ -345,6 +346,7 @@ proc http::geturl {url args} {
     array set type {
 	-binary		boolean
 	-blocksize	integer
+        -followredirect boolean
 	-queryblocksize integer
 	-strict		boolean
 	-timeout	integer
@@ -352,7 +354,7 @@ proc http::geturl {url args} {
     }
     set state(charset)	$defaultCharset
     set options {
-	-binary -blocksize -channel -command -handler -headers -keepalive
+	-binary -blocksize -channel -command -followredirect -handler -headers -keepalive
 	-method -myaddr -progress -protocol -query -queryblocksize
 	-querychannel -queryprogress -strict -timeout -type -validate
     }
